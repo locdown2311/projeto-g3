@@ -60,6 +60,6 @@ class User extends Authenticatable
     ];
     public function projetos()
     {
-        return $this->hasMany(Day::class);
+        return $this->hasMany(Projeto::class);
     }
 }

@@ -12,7 +12,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Categoria::factory(10)->create();
+        // Chamar os seeders
+        $this->call([
+            CategoriaSeeder::class,
+        ]);
+        //\App\Models\Categoria::factory(10)->create();
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

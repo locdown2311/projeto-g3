@@ -1,24 +1,27 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, usePage } from '@inertiajs/vue3';
 import Calendar from '../Components/Calendar.vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
-
+import { computed } from 'vue';
 defineProps({
     canLogin: Boolean,
     canRegister: Boolean,
     laravelVersion: String,
     phpVersion: String,
 });
+
+const tipos = computed(() => usePage().props.tipo)
+
 </script>
 
 <template>
-    <Head title="G3 - Calendário Unificado" />
+    <Head title="Calendário Unificado" />
 
     <div
         class="relative sm:flex sm:justify-center sm:items-center min-h-screen w-screen bg-dots-darker bg-center dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
         <div v-if="canLogin" class="sm:fixed sm:top-0 sm:right-0 p-6 text-right">
             <Link v-if="$page.props.auth.user" :href="route('dashboard')"
-                class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
+                class="border-double border-4 border-indigo-600 rounded-md p-2 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">
             Dashboard</Link>
 
             <template v-else>
@@ -46,18 +49,11 @@ defineProps({
                     Tabela de cores:
                     <div class="grid grid-cols-2">
                         <ul>
-                            <li class="flex items-center space-x-4">
-                                <div class="h-4 w-4 bg-red-500"></div>
-                                <span>Item 1</span>
+                            <li v-for="item in tipos" :key="item.id" class="flex items-center space-x-4">
+                                <div class="h-4 w-1" :class="item.cor"></div>
+                                <span>{{ item.nome }}</span>
                             </li>
-                            <li class="flex items-center space-x-4">
-                                <div class="h-4 w-4 bg-green-500"></div>
-                                <span>Item 2</span>
-                            </li>
-                            <li class="flex items-center space-x-4">
-                                <div class="h-4 w-4 bg-blue-500"></div>
-                                <span>Item 3</span>
-                            </li>
+
                             <div class="mt-2 relative">
                                 <input
                                     class="w-full h-8 pr-8 pl-3 py-1 rounded-full bg-gray-100 border-2 border-gray-200 text-gray-500"
